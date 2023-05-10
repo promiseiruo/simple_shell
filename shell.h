@@ -1,5 +1,5 @@
-#ifndef _SHELL_H_
-#define _SHELL_H_
+#ifndef SHELL_H_
+#define SHELL_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -111,16 +111,11 @@ typedef struct builtin
 } builtin_table;
 
 
-/* toem_shloop.c */
-int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
+/* shell_loop.c */
+int main(int argmc, char **argmv, char *env[]);
 
-/* toem_parser.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
+/* parser.c */
+char *parse_path(char *path);
 
 /* loophsh.c */
 int loophsh(char **);
@@ -131,11 +126,12 @@ int _eputchar(char);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
-/* toem_string.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
+/* string.c */
+char *_strcpy(char *dest, char *src);
+size_t _strncmp(char *s1, char *s2, size_t n);
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
+char *_strcat(char *dest, char *src);
 
 /* toem_string1.c */
 char *_strcpy(char *, char *);
@@ -148,17 +144,16 @@ char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
 
-/* toem_tokenizer.c */
-char **strtow(char *, char *);
-char **strtow2(char *, char);
+/* tokenizer.c */
+char **tokenize(char *lineptr);
 
-/* toem_realloc.c */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
+/* realloc.c */
+char *_memset(char *z, char x, unsigned int num);
+void s_free(char **);
+void *_realloc(void *potr, unsigned int prev_size, unsigned int next_size);
 
-/* toem_memory.c */
-int bfree(void **);
+/* memory.c */
+int memory_free(void **potr);
 
 /* toem_atoi.c */
 int interactive(info_t *);
@@ -225,11 +220,14 @@ size_t print_list(const list_t *);
 list_t *node_starts_with(list_t *, char *, char);
 ssize_t get_node_index(list_t *, list_t *);
 
-/* toem_vars.c */
+/* vars.c */
 int is_chain(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 int replace_alias(info_t *);
 int replace_vars(info_t *);
 int replace_string(char **, char *);
+
+/* main.c */
+int main(int argmc, char **argmp);
 
 #endif
