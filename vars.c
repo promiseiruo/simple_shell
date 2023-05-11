@@ -154,4 +154,4 @@ int replace_string(char **o, char *n)
 	free(*o);
 	*o = n;
 	return (1);
-}i
+}

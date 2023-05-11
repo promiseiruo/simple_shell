@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * parse_line - program that usees strtok to put in address
+ * parse_path - program that usees strtok to put in address
  *
- * @line: the char pointer.
+ * @path: the char pointer.
  *
  * Return: on success doubles the number of pointer.
  */
