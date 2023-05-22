@@ -20,7 +20,7 @@ char *parse_path(char *path)
 		perror("hsh");
 		exit(EXIT_FAILURE);
 	}
-	k = strtok(line, DELIMINATOR);
+	k = strtok(link, DELIMINATOR);
 
 	while (k != NULL)
 	{

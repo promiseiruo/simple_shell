@@ -39,6 +39,6 @@ int main(int argmc, char **argmp)
 	}
 	populate_env_list(info);
 	read_history(info);
-	hsh(info, aargmp);
+	hsh(info, argmp);
 	return (EXIT_SUCCESS);
 }

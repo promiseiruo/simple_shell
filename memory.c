@@ -10,7 +10,7 @@ int memory_free(void **potr)
 {
 	if (potr && *potr)
 	{
-		free(*ptr);
+		free(*potr);
 		*potr = NULL;
 		return (1);
 	}

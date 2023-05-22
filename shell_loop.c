@@ -27,16 +27,16 @@ int main(int argmc, char **argmv, char *env[])
 		linesize = getline(&line, &bufsize, stdin);
 		if (linesize < 0)
 			break;
-		info.ln_count++;
+		info_t.ln_count++;
 		if (line[linesize - 1] == '\n')
 			line[linesize - 1] = '\0';
-		command = tokenizer(line);
+		command = tokenize(line);
 		if (command == NULL || *command == NULL || **command == '\0')
 			continue;
 		if (checker(command, line))
 			continue;
 		path = find_path();
-		paths = tokenizer(path);
+		paths = tokenize(path);
 		pathcommand = test_path(paths, command[0]);
 		if (!pathcommand)
 			perror(argmv[0]);
