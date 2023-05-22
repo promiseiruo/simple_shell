@@ -1,48 +1,96 @@
 #include "shell.h"
-
 /**
- * parse_path - program that usees strtok to put in address
- *
- * @path: the char pointer.
- *
- * Return: on success doubles the number of pointer.
- */
-char *parse_path(char *path)
+* is_executable_command - program that determines if a file is an executable command
+* @info: the info struct
+* @file_path: path to the file
+*
+* Return: 1 if true, 0 otherwise
+*/
+int is_executable_command(info_t *info, char *file_path)
 {
-	int b_size = BUFFERSIZE;
-	int address = 0;
-	char **z = NULL;
-	char *k = NULL;
+	struct stat st;
 
-	z = malloc(sizeof(char *) * b_size);
-	if (!z)
+	(void)info;
+	if (!file_path || stat(file_path, &st))
 	{
-		perror("hsh");
-		exit(EXIT_FAILURE);
+		fprintf(stderr, "Error: Could not find file path.\n");
+		return (0);
 	}
-	k = strtok(link, DELIMINATOR);
+	if (st.st_mode & S_IFREG)
+	{
+		return (1);
+	}
+	return (0);
+}
+/**
+* duplicate_chars - program that duplicates characters
+* @path_str: the PATH string
+* @start_index: starting index
+* @stop_index: stopping index
+*
+* Return: pointer to new buffer
+*/
+char *duplicate_chars(char *path_str, int start_index, int stop_index)
+{
+	static char buffer[1024];
+	int i = 0, k = 0;
 
-	while (k != NULL)
+	for (k = 0, i = start_index; i < stop_index; i++)
 	{
-		z[location] = k;
-		k = strtok(NULL, DELIMINATOR);
-		address++;
-	}
-		if (address >= b_size)
+		if (path_str[i] != ':')
 		{
-			b_size += BUFFERSIZE;
-			z = _realloc(z, BUFFERSIZE,
-					  b_size * sizeof(char *));
-
-			if (!z)
-			{
-				{
-					perror("hsh: allocation error\n");
-					exit(EXIT_FAILURE);
-				}
-			}
-			k = strtok(NULL, DELIMINATOR);
+			buffer[k++] = path_str[i];
 		}
-	z[address] = NULL;
-	return (z);
+	}
+	buffer[k] = 0;
+	return (buffer);
+}
+/**
+* find_path - program that finds this cmd in the PATH string
+* @info: the info struct
+* @path_str: the PATH string
+* @cmd: the cmd to find
+*
+* Return: full path of cmd if found or NULL
+*/
+char *find_path(info_t *info, char *path_str, char *cmd)
+{
+	int i = 0, current_position = 0;
+	char *path;
+
+	if (!path_str)
+	{
+		fprintf(stderr, "Error: No PATH string provided.\n");
+		return (NULL);
+	}
+	if ((str_length(cmd) > 2) && starts_with(cmd, "./"))
+	{
+		if (is_executable_command(info, cmd))
+		{
+			return (cmd);
+		}
+	}
+	while (1)
+	{
+		if (!path_str[i] || path_str[i] == ':')
+		{
+			path = duplicate_chars(path_str, current_position, i);
+			if (!*path)
+			{
+				_strncat(path, cmd);
+			}
+			else
+			{
+				_strncat(path, "/");
+				_strncat(path, cmd);
+			}
+			if (is_executable_command(info, path))
+				return (path);
+			if (!path_str[i])
+				break;
+			current_position = i;
+		}
+		i++;
+	}
+	return (NULL);
 }

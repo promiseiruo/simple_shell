@@ -115,7 +115,9 @@ typedef struct builtin
 int main(int argmc, char **argmv, char *env[]);
 
 /* parser.c */
-char *parse_path(char *path);
+int is_executable_command(info_t *info, char *file_path);
+char *duplicate_chars(char *path_str, int start_index, int stop_index);
+char *find_path(info_t *info, char *path_str, char *cmd);
 
 /* loophsh.c */
 int loophsh(char **);
