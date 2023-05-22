@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * main - Entry point to the program
+ * _main - Entry point to the program
  * @argmc: The number of arguments passed to the program
  * @argmp: the array of the arguments passed to the program
  *
  * Return: if success return 0, if error return 1
  */
-int main(int argmc, char **argmp)
+int _main(int argmc, char **argmp)
 {
 	info_t info[] = { INFO_INIT };
 	int fd = 2;
