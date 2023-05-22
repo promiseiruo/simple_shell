@@ -228,4 +228,5 @@ int replace_vars(info_t *);
 int replace_string(char **, char *);
 /*main.c*/
 int _main(int argmc, char **argmp);
+int hsh(info_t *info, char **av);
 #endif
