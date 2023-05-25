@@ -100,7 +100,6 @@ size_t _strncmp(char *s1, char *s2, size_t n)
  * Return: char pointer to dest
  */
 
-char *_strcpy(char *dest, char *src)
 {
 	int i = 0;
 
