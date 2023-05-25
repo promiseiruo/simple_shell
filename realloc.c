@@ -1,62 +1,62 @@
 #include "shell.h"
 
 /**
- **_memset - program that fills memory with a constant byte
- *@z: pointer to memory area
- *@x: byte to fill *z with
- *@num: amount of bytes to be filled.
- *Return: (z) a pointer to the memory area z
+ * _memset - fills memory with a constant byte
+ * @s: the pointer to the memory area
+ * @b: the byte to fill *s with
+ * @n: the amount of bytes to be filled
+ * Return: (s) a pointer to the memory area s
  */
-char *_memset(char *z, char x, unsigned int num)
+char *_memset(char *s, char b, unsigned int n)
 {
-	unsigned int u;
+	unsigned int i;
 
-	for (u = 0; u < num; i++)
-		z[u] = x;
-	return (z);
+	for (i = 0; i < n; i++)
+		s[i] = b;
+	return (s);
 }
 
 /**
- * s_free - program that frees a string of strings
- * @str: string of strings
+ * ffree - frees a string of strings
+ * @pp: string of strings
  */
-void s_free(char **str)
+void ffree(char **pp)
 {
-	char **a = str;
+	char **a = pp;
 
-	if (!str)
+	if (!pp)
 		return;
-	while (*str)
-		free(*str++);
+	while (*pp)
+		free(*pp++);
 	free(a);
 }
 
 /**
- * _realloc - program that reallocates a block of memory
- * @potr: ptr to previous malloc'ated block
- * @prev_size: the byte size of previous block
- * @next_size: the byte size of new block
+ * _realloc - reallocates a block of memory
+ * @ptr: pointer to previous malloc'ated block
+ * @old_size: byte size of previous block
+ * @new_size: byte size of new block
  *
- * Return: the pointer to thea old block nameen.
+ * Return: pointer to da ol'block nameen.
  */
-void *_realloc(void *potr, unsigned int prev_size, unsigned int next_size)
+void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	char *blk;
+	char *p;
 
-	if (!potr)
-		return (malloc(next_size));
-	if (!next_size)
-		return (free(potr), NULL);
-	if (next_size == prev_size)
-		return (potr);
+	if (!ptr)
+		return (malloc(new_size));
+	if (!new_size)
+		return (free(ptr), NULL);
+	if (new_size == old_size)
+		return (ptr);
 
-	blk = malloc(next_size);
-	if (!b)
+	p = malloc(new_size);
+	if (!p)
 		return (NULL);
 
-	prev_size = prev_size < next_size ? prev_size : next_size;
-	while (prev_size--)
-		blk[prev_size] = ((char *)potr)[prev_size];
-	free(potr);
-	return (blk);
+	old_size = old_size < new_size ? old_size : new_size;
+	while (old_size--)
+		p[old_size] = ((char *)ptr)[old_size];
+	free(ptr);
+	return (p);
 }
