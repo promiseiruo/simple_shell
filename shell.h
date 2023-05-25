@@ -188,7 +188,7 @@ void sigintHandler(int);
 
 /* toem_getinfo.c */
 void clear_info(info_t *);
-void set_info(info_t *, char **);
+void set_info(info_t *info, char **av);
 void free_info(info_t *, int);
 
 /* toem_environ.c */
