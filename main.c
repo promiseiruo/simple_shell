@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _main - Entry point to the program
+ * _main - program that entry point to the program
  * @argmc: The number of arguments passed to the program
  * @argmp: the array of the arguments passed to the program
  *

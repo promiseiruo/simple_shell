@@ -112,12 +112,15 @@ typedef struct builtin
 
 
 /* shell_loop.c */
-int main(int argmc, char **argmv, char *env[]);
+int hsh(info_t *, char **);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
 
 /* parser.c */
-int is_executable_command(info_t *info, char *file_path);
-char *duplicate_chars(char *path_str, int start_index, int stop_index);
-char *find_path(info_t *info, char *path_str, char *cmd);
+int is_cmd(info_t *, char *);
+char *dup_chars(char *, int, int);
+char *find_path(info_t *, char *, char *);
 
 /* loophsh.c */
 int loophsh(char **);

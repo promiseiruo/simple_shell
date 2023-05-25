@@ -1,94 +1,84 @@
 #include "shell.h"
+
 /**
-* is_executable_command - program that determines if a file is an executable command
-* @info: the info struct
-* @file_path: path to the file
-*
-* Return: 1 if true, 0 otherwise
-*/
-int is_executable_command(info_t *info, char *file_path)
+ * is_cmd - determines if a file is an executable command
+ * @info: the info struct
+ * @path: path to the file
+ *
+ * Return: 1 if true, 0 otherwise
+ */
+int is_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
 	(void)info;
-	if (!file_path || stat(file_path, &st))
-	{
-		fprintf(stderr, "Error: Could not find file path.\n");
+	if (!path || stat(path, &st))
 		return (0);
-	}
+
 	if (st.st_mode & S_IFREG)
 	{
 		return (1);
 	}
 	return (0);
 }
+
 /**
-* duplicate_chars - program that duplicates characters
-* @path_str: the PATH string
-* @start_index: starting index
-* @stop_index: stopping index
-*
-* Return: pointer to new buffer
-*/
-char *duplicate_chars(char *path_str, int start_index, int stop_index)
+ * dup_chars - duplicates characters
+ * @pathstr: the PATH string
+ * @start: starting index
+ * @stop: stopping index
+ *
+ * Return: pointer to new buffer
+ */
+char *dup_chars(char *pathstr, int start, int stop)
 {
-	static char buffer[1024];
+	static char buf[1024];
 	int i = 0, k = 0;
 
-	for (k = 0, i = start_index; i < stop_index; i++)
-	{
-		if (path_str[i] != ':')
-		{
-			buffer[k++] = path_str[i];
-		}
-	}
-	buffer[k] = 0;
-	return (buffer);
+	for (k = 0, i = start; i < stop; i++)
+		if (pathstr[i] != ':')
+			buf[k++] = pathstr[i];
+	buf[k] = 0;
+	return (buf);
 }
+
 /**
-* find_path - program that finds this cmd in the PATH string
-* @info: the info struct
-* @path_str: the PATH string
-* @cmd: the cmd to find
-*
-* Return: full path of cmd if found or NULL
-*/
-char *find_path(info_t *info, char *path_str, char *cmd)
+ * find_path - finds this cmd in the PATH string
+ * @info: the info struct
+ * @pathstr: the PATH string
+ * @cmd: the cmd to find
+ *
+ * Return: full path of cmd if found or NULL
+ */
+char *find_path(info_t *info, char *pathstr, char *cmd)
 {
-	int i = 0, current_position = 0;
+	int i = 0, curr_pos = 0;
 	char *path;
 
-	if (!path_str)
-	{
-		fprintf(stderr, "Error: No PATH string provided.\n");
+	if (!pathstr)
 		return (NULL);
-	}
-	if ((str_length(cmd) > 2) && starts_with(cmd, "./"))
+	if ((_strlen(cmd) > 2) && starts_with(cmd, "./"))
 	{
-		if (is_executable_command(info, cmd))
-		{
+		if (is_cmd(info, cmd))
 			return (cmd);
-		}
 	}
 	while (1)
 	{
-		if (!path_str[i] || path_str[i] == ':')
+		if (!pathstr[i] || pathstr[i] == ':')
 		{
-			path = duplicate_chars(path_str, current_position, i);
+			path = dup_chars(pathstr, curr_pos, i);
 			if (!*path)
-			{
-				_strncat(path, cmd);
-			}
+				_strcat(path, cmd);
 			else
 			{
-				_strncat(path, "/");
-				_strncat(path, cmd);
+				_strcat(path, "/");
+				_strcat(path, cmd);
 			}
-			if (is_executable_command(info, path))
+			if (is_cmd(info, path))
 				return (path);
-			if (!path_str[i])
+			if (!pathstr[i])
 				break;
-			current_position = i;
+			curr_pos = i;
 		}
 		i++;
 	}
