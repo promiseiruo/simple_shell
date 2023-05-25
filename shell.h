@@ -153,9 +153,9 @@ char *_strchr(char *, char);
 char **tokenize(char *lineptr);
 
 /* realloc.c */
-char *_memset(char *z, char x, unsigned int num);
-void s_free(char **);
-void *_realloc(void *potr, unsigned int prev_size, unsigned int next_size);
+char *_memset(char *, char, unsigned int);
+void ffree(char **);
+void *_realloc(void *, unsigned int, unsigned int);
 
 /* memory.c */
 int memory_free(void **potr);
