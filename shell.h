@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
 #include <limits.h>
 #include <fcntl.h>
@@ -110,7 +111,7 @@ typedef struct builtin
 } builtin_table;
 
 
-/* shell_loop.c */
+/* toem_shloop.c */
 int hsh(info_t *, char **);
 int find_builtin(info_t *);
 void find_cmd(info_t *);

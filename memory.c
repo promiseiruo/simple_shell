@@ -1,17 +1,17 @@
 #include "shell.h"
 
 /**
- * memory_free - program that frees a pointer and NULL the address
- * @potr: the address of the pointer to free
+ * bfree - frees a pointer and NULLs the address
+ * @ptr: address of the pointer to free
  *
- * Return: 1 if freed succesful, otherwise 0.
+ * Return: 1 if freed, otherwise 0.
  */
-int memory_free(void **potr)
+int bfree(void **ptr)
 {
-	if (potr && *potr)
+	if (ptr && *ptr)
 	{
-		free(*potr);
-		*potr = NULL;
+		free(*ptr);
+		*ptr = NULL;
 		return (1);
 	}
 	return (0);
